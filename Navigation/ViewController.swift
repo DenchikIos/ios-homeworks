@@ -1,9 +1,4 @@
-//
-//  ViewController.swift
-//  Navigation
-//
-//  Created by User on 07.09.2023.
-//
+
 
 import UIKit
 
