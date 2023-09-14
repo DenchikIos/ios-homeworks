@@ -1,7 +1,7 @@
 import UIKit
 
 class FeedViewController: UIViewController {
-
+    
     var post = Post(title: "Post")
     
     @objc private lazy var actionButton: UIButton = {
