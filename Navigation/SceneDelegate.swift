@@ -1,4 +1,3 @@
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -20,7 +19,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let profileViewController = ProfileViewController()
         profileViewController.title = "Profile"
-        profileViewController.view.backgroundColor = .systemCyan
         profileViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.circle"), tag: 1)
         
         let tabBarController = UITabBarController()

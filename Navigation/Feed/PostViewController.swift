@@ -17,6 +17,7 @@ class PostViewController: UIViewController {
     func buttonPressed(_ sender: UIButton) {
         dismiss(animated: true)
     }
+    
     @objc func infoViewController(_ sender: UIButton) {
          let infoViewController = InfoViewController()
          let navigationUIContoller = UINavigationController(rootViewController: infoViewController)
