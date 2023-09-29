@@ -49,8 +49,7 @@ class ProfileHeaderView: UIView {
         textField.autocorrectionType = UITextAutocorrectionType.no
         textField.clearButtonMode = UITextField.ViewMode.whileEditing;
         textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
-        
-    return textField
+        return textField
     }()
     
     private let setStatusButton: UIButton = {
