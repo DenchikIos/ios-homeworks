@@ -62,21 +62,18 @@ class ProfileHeaderView: UIView {
         button.layer.shadowOpacity = 0.7
         button.layer.shadowRadius = 4.0
         button.layer.shadowColor = UIColor.black.cgColor
+        button.addTarget(ProfileHeaderView.self, action: #selector(buttonPressed), for: .touchUpInside)
         return button
+        
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
-        addTarget()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    private func addTarget() {
-        setStatusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
     }
     
     @objc private func buttonPressed() {
