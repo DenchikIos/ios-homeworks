@@ -29,6 +29,7 @@ class ProfileViewController: UIViewController {
         let safeAreaGuide = view.safeAreaLayoutGuide
         profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
         
+        
         NSLayoutConstraint.activate([
             profileHeaderView.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: 0),
             profileHeaderView.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 0),

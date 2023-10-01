@@ -34,22 +34,22 @@ class ProfileHeaderView: UIView {
     }()
     
     private var statusTextField: UITextField = {
-            var textField = UITextField()
-            textField.translatesAutoresizingMaskIntoConstraints = false
-            textField.backgroundColor = .white
-            textField.layer.cornerRadius = 12.0
-            textField.layer.borderWidth = 1.0
-            textField.layer.borderColor = UIColor.black.cgColor
-            textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-            textField.textColor = .black
-            textField.placeholder = "Set new status"
-            textField.textAlignment = .left
-            textField.keyboardType = UIKeyboardType.default
-            textField.returnKeyType = UIReturnKeyType.done
-            textField.autocorrectionType = UITextAutocorrectionType.no
-            textField.clearButtonMode = UITextField.ViewMode.whileEditing;
-            textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
-            return textField
+        var textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.backgroundColor = .white
+        textField.layer.cornerRadius = 12.0
+        textField.layer.borderWidth = 1.0
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        textField.textColor = .black
+        textField.placeholder = "Set new status"
+        textField.textAlignment = .left
+        textField.keyboardType = UIKeyboardType.default
+        textField.returnKeyType = UIReturnKeyType.done
+        textField.autocorrectionType = UITextAutocorrectionType.no
+        textField.clearButtonMode = UITextField.ViewMode.whileEditing;
+        textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        return textField
     }()
     
     private var setStatusButton: UIButton = {
@@ -92,13 +92,13 @@ class ProfileHeaderView: UIView {
         addSubview(statusTextField)
         
         let safeAreaGuide = self.safeAreaLayoutGuide
-        
-        fullNameLabel.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 50).isActive = true
-        fullNameLabel.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 16).isActive = true
-        fullNameLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16).isActive = true
-        fullNameLabel.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor).isActive = true
-        
+    
         NSLayoutConstraint.activate([
+            fullNameLabel.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 16),
+            fullNameLabel.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 50),
+            fullNameLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
+            fullNameLabel.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor),
+            
             avatarImageView.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 16),
             avatarImageView.leftAnchor.constraint(equalTo: safeAreaGuide.leftAnchor, constant: 16),
             avatarImageView.widthAnchor.constraint(equalToConstant: 120),
