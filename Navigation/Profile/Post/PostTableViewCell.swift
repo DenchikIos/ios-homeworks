@@ -2,18 +2,21 @@ import UIKit
 
 class PostTableViewCell: UITableViewCell {
     
+    private var viewCounter = 0
+    
     var postAuthor: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
-        label.numberOfLines = 3
+        label.numberOfLines = 2
         return label
     }()
 
     var postImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
+        image.backgroundColor = .black
         image.contentMode = .scaleAspectFit
         return image
     }()
@@ -51,7 +54,7 @@ class PostTableViewCell: UITableViewCell {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("Ups")
+        fatalError("Error")
     }
     
     private func setupConstraints() {
@@ -84,7 +87,13 @@ class PostTableViewCell: UITableViewCell {
         postDescription.text = model.description
         postImage.image = UIImage(named: model.image)
         postLikes.text = "Like: \(model.likes)"
+        viewCounter = model.views
         postViews.text = "Views: \(model.views)"
+    }
+    
+    func incrementPostViewsCounter() {
+        viewCounter += 1
+        postViews.text = "Views: \(viewCounter)"
     }
 }
 
