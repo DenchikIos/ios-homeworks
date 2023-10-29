@@ -10,7 +10,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         true
     }
 
-
     func application(
         _ application: UIApplication,
         configurationForConnecting connectingSceneSession: UISceneSession,
