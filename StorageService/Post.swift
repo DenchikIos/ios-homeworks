@@ -1,18 +1,22 @@
 import Foundation
 
-struct PostFeed {
-    var title: String
+public struct PostFeed {
+    
+    public var title: String
+    public init(title: String) {
+        self.title = title
+    }
 }
 
-struct Post {
-    let author: String
-    let description: String
-    let image: String
-    let likes: Int
-    let views: Int
+public struct Post {
+    public let author: String
+    public let description: String
+    public let image: String
+    public let likes: Int
+    public let views: Int
 }
 
-let postExamples: [Post] = [
+public let postExamples: [Post] = [
     Post(author: "Путешествия и приключения",
          description: "В итальянской Сиене подведены итоги фото конкурса. В нем приняли участие профессионалы и любители.",
          image: "post1",

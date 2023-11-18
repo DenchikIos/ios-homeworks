@@ -1,4 +1,5 @@
 import UIKit
+import StorageService
 
 class ProfileViewController: UIViewController {
     
@@ -17,7 +18,12 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        #if DEBUG
         view.backgroundColor = .lightGray
+        #else
+        view.backgroundColor = .systemBrown
+        #endif
+        
         view.addSubview(ProfileViewController.postTableView)
         ProfileViewController.postTableView.dataSource = self
         ProfileViewController.postTableView.delegate = self
@@ -34,6 +40,7 @@ class ProfileViewController: UIViewController {
             ProfileViewController.postTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+    
 }
 
 extension ProfileViewController: UITableViewDataSource {
