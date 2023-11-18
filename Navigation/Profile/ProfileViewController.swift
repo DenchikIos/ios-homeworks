@@ -1,45 +1,104 @@
 import UIKit
+import StorageService
 
 class ProfileViewController: UIViewController {
     
-    private lazy var profileHeaderView = ProfileHeaderView()
+    static let headerIdent = "header"
+    static let postIdent = "post"
+    static let photoIdent = "photo"
     
-    private let profileButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Button", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 5.0
-        button.layer.shadowOffset = CGSize(width: 5.0, height: 5.0)
-        button.layer.shadowOpacity = 1.0
-        button.layer.shadowRadius = 10.0
-        button.layer.shadowColor = UIColor.black.cgColor
-        return button
+    static var postTableView: UITableView = {
+        let tableView = UITableView.init(frame: .zero,style: .grouped)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: ProfileViewController.headerIdent)
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: ProfileViewController.photoIdent)
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: ProfileViewController.postIdent)
+        return tableView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        #if DEBUG
         view.backgroundColor = .lightGray
-        view.addSubview(profileHeaderView)
-        view.addSubview(profileButton)
-        setupConstraint()
-    }
-    
-    private func setupConstraint() {
-        let safeAreaGuide = view.safeAreaLayoutGuide
-        profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
+        #else
+        view.backgroundColor = .systemBrown
+        #endif
         
+        view.addSubview(ProfileViewController.postTableView)
+        ProfileViewController.postTableView.dataSource = self
+        ProfileViewController.postTableView.delegate = self
+        setupConstraint()
+        self.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.circle"), tag: 1)
+    }
+     
+    private func setupConstraint() {
         
         NSLayoutConstraint.activate([
-            profileHeaderView.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: 0),
-            profileHeaderView.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 0),
-            profileHeaderView.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor),
-            profileHeaderView.heightAnchor.constraint(equalToConstant: 220),
-                   
-            profileButton.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 0),
-            profileButton.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: 0),
-            profileButton.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor),
-            profileButton.heightAnchor.constraint(equalToConstant: 50),
-               ])
+            ProfileViewController.postTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            ProfileViewController.postTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            ProfileViewController.postTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            ProfileViewController.postTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
+    
+}
+
+extension ProfileViewController: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0: return 1
+        case 1: return postExamples.count
+        default:
+            assertionFailure("no registered section")
+            return 1
+        }
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+}
+
+extension ProfileViewController: UITableViewDelegate {
+    
+    internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.section {
+        case 0:
+            let cell = ProfileViewController.postTableView.dequeueReusableCell(withIdentifier: ProfileViewController.photoIdent, for: indexPath) as! PhotosTableViewCell
+            return cell
+        case 1:
+            let cell = ProfileViewController.postTableView.dequeueReusableCell(withIdentifier: ProfileViewController.postIdent, for: indexPath) as! PostTableViewCell
+            cell.update(model: postExamples[indexPath.row])
+            return cell
+        default:
+            assertionFailure("no registered section")
+            return UITableViewCell()
+        }
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard section == 0 else { return nil }
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: Self.headerIdent) as! ProfileHeaderView
+        return headerView
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 ? 270 : 0
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            tableView.deselectRow(at: indexPath, animated: false)
+            navigationController?.pushViewController(PhotosViewController(), animated: true)
+        case 1:
+            guard let cell = tableView.cellForRow(at: indexPath) else { return }
+            if let post = cell as? PostTableViewCell {
+                post.incrementPostViewsCounter()
+            }
+        default:
+            assertionFailure("no registered section")
+        }
+     }
 }
