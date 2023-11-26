@@ -1,6 +1,5 @@
 import UIKit
 import StorageService
-import iOSIntPackage
 
 class PostTableViewCell: UITableViewCell {
     
@@ -87,17 +86,11 @@ class PostTableViewCell: UITableViewCell {
     func update(model: Post) {
         postAuthor.text = model.author
         postDescription.text = model.description
-        let imageTempiOSInpPackage = ImageProcessor()
-        imageTempiOSInpPackage.processImage(sourceImage: UIImage(named: model.image) ?? UIImage(), filter:.colorInvert, completion: completionImage)
-        postLikes.text = "Лайк: \(model.likes)"
+        postImage.image = UIImage(named: model.image)
+        postLikes.text = "Like: \(model.likes)"
         viewCounter = model.views
-        postViews.text = "Просмотров: \(model.views)"
+        postViews.text = "Views: \(model.views)"
     }
-    
-    func completionImage(imageInto: UIImage?) -> Void {
-            guard let tempImage = imageInto else { return }
-            postImage.image = tempImage
-        }
     
     func incrementPostViewsCounter() {
         viewCounter += 1
