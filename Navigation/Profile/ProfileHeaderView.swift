@@ -8,7 +8,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     var avatarBackground = UIView()
     private var avatarOriginPoint = CGPoint()
     
-    private let avatarImageView: UIImageView = {
+    let avatarImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "cat"))
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .green
@@ -19,7 +19,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return imageView
     }()
     
-    private let fullNameLabel: UILabel = {
+    let fullNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Hipster cat"
@@ -28,7 +28,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return label
     }()
     
-    private let statusLabel: UILabel = {
+    let statusLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Status"
@@ -37,7 +37,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return label
     }()
     
-    private var statusTextField: UITextField = {
+    var statusTextField: UITextField = {
         var textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
@@ -56,7 +56,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return textField
     }()
     
-    private let setStatusButton: UIButton = {
+    let setStatusButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Set status", for: .normal)
