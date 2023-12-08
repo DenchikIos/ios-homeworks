@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		CE108BD62AB33A28003BF3C0 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE108BD52AB33A28003BF3C0 /* ProfileHeaderView.swift */; };
+		CE2BE5592B2219200043B46F /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2BE5582B2219200043B46F /* Checker.swift */; };
+		CE2BE55B2B221EBA0043B46F /* LoginViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2BE55A2B221EBA0043B46F /* LoginViewControllerDelegate.swift */; };
 		CE905E432B1528FF000D4894 /* CurrentUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE905E422B1528FF000D4894 /* CurrentUserService.swift */; };
 		CE905E452B15341B000D4894 /* TestUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE905E442B15341B000D4894 /* TestUserService.swift */; };
 		CE93807C2B08F44600765D81 /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = CE93807B2B08F44600765D81 /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -59,6 +61,8 @@
 
 /* Begin PBXFileReference section */
 		CE108BD52AB33A28003BF3C0 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		CE2BE5582B2219200043B46F /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
+		CE2BE55A2B221EBA0043B46F /* LoginViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerDelegate.swift; sourceTree = "<group>"; };
 		CE905E422B1528FF000D4894 /* CurrentUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserService.swift; sourceTree = "<group>"; };
 		CE905E442B15341B000D4894 /* TestUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserService.swift; sourceTree = "<group>"; };
 		CE9380792B08F44600765D81 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,7 +112,6 @@
 			isa = PBXGroup;
 			children = (
 				CECD35AD2AAA2D1F00AB00B6 /* ProfileViewController.swift */,
-				CEB1B27A2AD191C8007F4521 /* LogInViewController.swift */,
 				CE108BD52AB33A28003BF3C0 /* ProfileHeaderView.swift */,
 				CEB7A5A62B139B2A00031ED1 /* User */,
 				CEB1B28B2AE56F0B007F4521 /* Post */,
@@ -200,8 +203,11 @@
 		CEB7A5A62B139B2A00031ED1 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				CEB1B27A2AD191C8007F4521 /* LogInViewController.swift */,
 				CEB7A5A42B13987700031ED1 /* User.swift */,
 				CE905E422B1528FF000D4894 /* CurrentUserService.swift */,
+				CE2BE55A2B221EBA0043B46F /* LoginViewControllerDelegate.swift */,
+				CE2BE5582B2219200043B46F /* Checker.swift */,
 				CE905E442B15341B000D4894 /* TestUserService.swift */,
 			);
 			path = User;
@@ -329,6 +335,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEB4D0312AAA027F00E10B95 /* AppDelegate.swift in Sources */,
+				CE2BE55B2B221EBA0043B46F /* LoginViewControllerDelegate.swift in Sources */,
+				CE2BE5592B2219200043B46F /* Checker.swift in Sources */,
 				CEB4AA252AAB71E300FEBA24 /* PostViewController.swift in Sources */,
 				CEB1B27B2AD191C8007F4521 /* LogInViewController.swift in Sources */,
 				CECD35AE2AAA2D1F00AB00B6 /* ProfileViewController.swift in Sources */,

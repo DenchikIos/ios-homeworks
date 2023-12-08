@@ -1,6 +1,14 @@
 import UIKit
 
-class LogInViewController: UIViewController {
+
+enum LoginError: Error {
+    case userNotFound
+    case wrongPassword
+}
+
+final class LogInViewController: UIViewController {
+    
+    var loginDelegate: LoginViewControllerDelegate?
 
     private var vkLogo: UIImageView = {
         let imageView = UIImageView()
@@ -145,36 +153,40 @@ class LogInViewController: UIViewController {
         ])
     }
 
+    private func loginErrorNotification(caseOf error: LoginError) {
+            var errorMassage: String
+            switch error {
+                case .userNotFound:
+                    errorMassage = "Login entered incorrectly"
+                case .wrongPassword:
+                    errorMassage = "Incorrect password entered"
+            }
+            let alertController = UIAlertController(title: "Warning", message: errorMassage, preferredStyle: .alert)
+            let actionAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
+            alertController.addAction(actionAlert)
+            self.present(alertController, animated: true)
+        }
+
     @objc private func touchLoginButton() {
-            let typedLogin = loginField.text ?? ""
-            
-            #if DEBUG
-                let userService = TestUserService()
-                if userService.authorization(userLogin: typedLogin) == nil {
+        let typedLogin = loginField.text ?? ""
+        let typedPassword = passwordField.text ?? ""
         
-                    let alertController = UIAlertController(title: "Тестовое предупреждение", message: "Неправильно введен логин, введите test ", preferredStyle: .alert)
-                    let actionAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
-                    alertController.addAction(actionAlert)
-                    self.present(alertController, animated: true)
+#if DEBUG
+        let userService = TestUserService()
+#else
+        let userService = CurrentUserService()
+#endif
         
-                } else {
-                    let profileViewController = ProfileViewController(userService: userService.authorization(userLogin: typedLogin))
-                    navigationController?.pushViewController(profileViewController, animated: true)
-                }
-            #else
-                let userService = CurrentUserService()
-                    if userService.authorization(userLogin: typedLogin) == nil {
-                
-                        let alertController = UIAlertController(title: "Предупреждение", message: "Неправильно введен логин", preferredStyle: .alert)
-                        let actionAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
-                        alertController.addAction(actionAlert)
-                        self.present(alertController, animated: true)
-                    } else {
-                        let profileViewController = ProfileViewController(userService: userService.authorization(userLogin: typedLogin))
-                                     navigationController?.pushViewController(profileViewController, animated: true)
-                         }
-                         #endif
-                     }
+        if userService.authorization(userLogin: typedLogin) == nil {
+            loginErrorNotification(caseOf: .userNotFound)
+        } else { if loginDelegate?.check(log: typedLogin, pass: typedPassword) == false {
+            loginErrorNotification(caseOf: .wrongPassword)
+        } else {
+            let profileViewController = ProfileViewController(userService: userService.authorization(userLogin: typedLogin))
+            navigationController?.pushViewController(profileViewController, animated: true)
+        }
+        }
+    }
 
     @objc private func keyboardShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
