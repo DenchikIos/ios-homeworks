@@ -1,6 +1,5 @@
 import UIKit
 
-
 enum LoginError: Error {
     case userNotFound
     case wrongPassword
@@ -42,21 +41,9 @@ final class LogInViewController: UIViewController {
         return stack
     }()
     
-    var loginButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        if let pixel = UIImage(named: "blue_pixel") {
-            button.setBackgroundImage(pixel.image(alpha: 1), for: .normal)
-            button.setBackgroundImage(pixel.image(alpha: 0.8), for: .selected)
-            button.setBackgroundImage(pixel.image(alpha: 0.6), for: .highlighted)
-            button.setBackgroundImage(pixel.image(alpha: 0.4), for: .disabled)
-        }
-
-        button.setTitle("Login", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+    var loginButton: CustomButton = {
+        let button = CustomButton(title: "Continue", titleColor: .white, tabAction: nil)
         button.addTarget(nil, action: #selector(touchLoginButton), for: .touchUpInside)
-        button.layer.cornerRadius = 12
-        button.clipsToBounds = true
         return button
     }()
     
@@ -64,6 +51,7 @@ final class LogInViewController: UIViewController {
         let login = UITextField()
         login.translatesAutoresizingMaskIntoConstraints = false
         login.placeholder = "Login"
+        login.text = "iosDeveloper"
         login.layer.borderColor = UIColor.lightGray.cgColor
         login.layer.borderWidth = 0.25
         login.leftViewMode = .always
@@ -81,6 +69,7 @@ final class LogInViewController: UIViewController {
         password.translatesAutoresizingMaskIntoConstraints = false
         password.leftViewMode = .always
         password.placeholder = "Password"
+        password.text = "09061992"
         password.layer.borderColor = UIColor.lightGray.cgColor
         password.layer.borderWidth = 0.25
         password.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: password.frame.height))
@@ -94,7 +83,7 @@ final class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor(red: 231/255, green: 231/255, blue: 223/255, alpha: 1)
         navigationController?.navigationBar.isHidden = true
         view.addSubview(loginScrollView)
         loginScrollView.addSubview(contentView)
@@ -206,3 +195,4 @@ extension LogInViewController: UITextFieldDelegate {
         return true
     }
 }
+

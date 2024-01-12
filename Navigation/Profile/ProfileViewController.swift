@@ -31,9 +31,9 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         #if DEBUG
-        view.backgroundColor = .lightGray
+        view.backgroundColor = UIColor(red: 231/255, green: 231/255, blue: 223/255, alpha: 1)
         #else
-        view.backgroundColor = .systemGray3
+        view.backgroundColor = UIColor(red: 231/255, green: 231/255, blue: 223/255, alpha: 1)
         #endif
         
         view.addSubview(ProfileViewController.postTableView)

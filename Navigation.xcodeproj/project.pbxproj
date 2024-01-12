@@ -10,6 +10,9 @@
 		CE108BD62AB33A28003BF3C0 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE108BD52AB33A28003BF3C0 /* ProfileHeaderView.swift */; };
 		CE2BE5592B2219200043B46F /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2BE5582B2219200043B46F /* Checker.swift */; };
 		CE2BE55B2B221EBA0043B46F /* LoginViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2BE55A2B221EBA0043B46F /* LoginViewControllerDelegate.swift */; };
+		CE46BC242B4EB45700BBDDD0 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46BC232B4EB45700BBDDD0 /* CustomButton.swift */; };
+		CE46BC262B4F26A100BBDDD0 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46BC252B4F26A100BBDDD0 /* FeedModel.swift */; };
+		CE46BC322B5188CF00BBDDD0 /* SecretWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46BC312B5188CE00BBDDD0 /* SecretWord.swift */; };
 		CE905E432B1528FF000D4894 /* CurrentUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE905E422B1528FF000D4894 /* CurrentUserService.swift */; };
 		CE905E452B15341B000D4894 /* TestUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE905E442B15341B000D4894 /* TestUserService.swift */; };
 		CE93807C2B08F44600765D81 /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = CE93807B2B08F44600765D81 /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -64,6 +67,9 @@
 		CE108BD52AB33A28003BF3C0 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		CE2BE5582B2219200043B46F /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
 		CE2BE55A2B221EBA0043B46F /* LoginViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerDelegate.swift; sourceTree = "<group>"; };
+		CE46BC232B4EB45700BBDDD0 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		CE46BC252B4F26A100BBDDD0 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
+		CE46BC312B5188CE00BBDDD0 /* SecretWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretWord.swift; sourceTree = "<group>"; };
 		CE905E422B1528FF000D4894 /* CurrentUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserService.swift; sourceTree = "<group>"; };
 		CE905E442B15341B000D4894 /* TestUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserService.swift; sourceTree = "<group>"; };
 		CE9380792B08F44600765D81 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,10 +133,28 @@
 			isa = PBXGroup;
 			children = (
 				CECD35AB2AAA2CD900AB00B6 /* FeedViewController.swift */,
+				CE46BC252B4F26A100BBDDD0 /* FeedModel.swift */,
+				CE46BC312B5188CE00BBDDD0 /* SecretWord.swift */,
 				CEB4AA262AAB728E00FEBA24 /* InfoViewController.swift */,
 				CEB4AA242AAB71E300FEBA24 /* PostViewController.swift */,
 			);
 			path = Feed;
+			sourceTree = "<group>";
+		};
+		CE46BC2B2B51840B00BBDDD0 /* LoginAndPassword */ = {
+			isa = PBXGroup;
+			children = (
+				CEB1B27A2AD191C8007F4521 /* LogInViewController.swift */,
+			);
+			path = LoginAndPassword;
+			sourceTree = "<group>";
+		};
+		CE46BC302B51877400BBDDD0 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				CE46BC232B4EB45700BBDDD0 /* CustomButton.swift */,
+			);
+			path = Custom;
 			sourceTree = "<group>";
 		};
 		CE93807A2B08F44600765D81 /* StorageService */ = {
@@ -191,6 +215,8 @@
 		CEB4D02F2AAA027F00E10B95 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				CE46BC302B51877400BBDDD0 /* Custom */,
+				CE46BC2B2B51840B00BBDDD0 /* LoginAndPassword */,
 				CE108BD92AB33E09003BF3C0 /* Feed */,
 				CEB4D0302AAA027F00E10B95 /* AppDelegate.swift */,
 				CEB4D0322AAA027F00E10B95 /* SceneDelegate.swift */,
@@ -205,7 +231,6 @@
 		CEB7A5A62B139B2A00031ED1 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				CEB1B27A2AD191C8007F4521 /* LogInViewController.swift */,
 				CEB7A5A42B13987700031ED1 /* User.swift */,
 				CE905E422B1528FF000D4894 /* CurrentUserService.swift */,
 				CE2BE55A2B221EBA0043B46F /* LoginViewControllerDelegate.swift */,
@@ -353,6 +378,8 @@
 				CE108BD62AB33A28003BF3C0 /* ProfileHeaderView.swift in Sources */,
 				CECD35AC2AAA2CD900AB00B6 /* FeedViewController.swift in Sources */,
 				CE905E452B15341B000D4894 /* TestUserService.swift in Sources */,
+				CE46BC322B5188CF00BBDDD0 /* SecretWord.swift in Sources */,
+				CE46BC242B4EB45700BBDDD0 /* CustomButton.swift in Sources */,
 				CEB1B27D2AD1924A007F4521 /* PostTableViewCell.swift in Sources */,
 				CE905E432B1528FF000D4894 /* CurrentUserService.swift in Sources */,
 				CEB1B27F2AD193F6007F4521 /* ExtensionUIView.swift.swift in Sources */,
@@ -362,6 +389,7 @@
 				CEB1B2852AE41F82007F4521 /* PhotosViewController.swift in Sources */,
 				CEB4AA272AAB728E00FEBA24 /* InfoViewController.swift in Sources */,
 				CEB4D0332AAA027F00E10B95 /* SceneDelegate.swift in Sources */,
+				CE46BC262B4F26A100BBDDD0 /* FeedModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

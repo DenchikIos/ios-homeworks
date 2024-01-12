@@ -1,7 +1,7 @@
 import UIKit
 import StorageService
 
-class PostViewController: UIViewController {
+final class PostViewController: UIViewController {
     
     var post: PostFeed
     
@@ -16,9 +16,13 @@ class PostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemGray3
+        setupUI()
+    }
+    
+    func setupUI(){
+        self.view.backgroundColor = .darkGray
         navigationItem.title = post.title
-        let barButtonItem = UIBarButtonItem(title: "Info", style: .plain, target: self, action: #selector(infoViewController))
+        let barButtonItem = UIBarButtonItem(title: "Инфо", style: .plain, target: self, action: #selector(infoViewController))
         navigationItem.rightBarButtonItem = barButtonItem
     }
     
@@ -32,4 +36,5 @@ class PostViewController: UIViewController {
         navigationUIContoller.modalPresentationStyle = .pageSheet
         present(navigationUIContoller, animated: true)
     }
+    
 }

@@ -198,7 +198,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
 }
 
 extension ProfileHeaderView: UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
