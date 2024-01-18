@@ -41,11 +41,8 @@ final class LogInViewController: UIViewController {
         return stack
     }()
     
-    var loginButton: CustomButton = {
-        let button = CustomButton(title: "Continue", titleColor: .white, tabAction: nil)
-        button.addTarget(nil, action: #selector(touchLoginButton), for: .touchUpInside)
-        return button
-    }()
+    private lazy var loginButton = CustomButton(title: "Continue", titleColor: .white) { [unowned self] in touchLoginButton()
+        }
     
     var loginField: UITextField = {
         let login = UITextField()

@@ -7,7 +7,7 @@ final class FeedViewController: UIViewController {
 
     var post = PostFeed(title: "Мой пост")
     var viewModel = FeedViewModel()
-    
+
     //MARK: - Private Properties
     
     private lazy var feedScrollView: UIScrollView = {
@@ -30,9 +30,13 @@ final class FeedViewController: UIViewController {
         stackView.distribution = .fillEqually
         stackView.spacing = 10
         
-        var firstButton = CustomButton(title: "First post", titleColor: .black, tabAction: self.onTapShowNextView)
+        var firstButton = CustomButton(title: "First post", titleColor: .black) { [unowned self] in
+            onTapShowNextView()
+        }
         stackView.addArrangedSubview(firstButton)
-        var secondButton = CustomButton(title: "Second post", titleColor: .black, tabAction: self.onTapShowNextView)
+        var secondButton = CustomButton(title: "Second post", titleColor: .black) { [unowned self] in
+            onTapShowNextView()
+        }
         stackView.addArrangedSubview(secondButton)
         return stackView
     }()
@@ -56,16 +60,8 @@ final class FeedViewController: UIViewController {
         return textField
     }()
     
-    private lazy var checkGuessButton: CustomButton = {
-        var button = CustomButton(title: "Checking the secret word", titleColor: .white, tabAction: self.actionSetStatusButtonPressed)
-        button.setTitleColor(.black, for: .selected)
-        button.setTitleColor(.black, for: .highlighted)
-        button.layer.cornerRadius = 10
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.white.cgColor
-        button.layer.masksToBounds = true
-        return button
-    }()
+    private lazy var checkGuessButton = CustomButton(title: "Secret word check", titleColor: .white) { [unowned self] in actionSetStatusButtonPressed()
+        }
     
     private lazy var resultLabelOfSecretWord: UILabel = {
         let resultLabel = UILabel()
@@ -208,3 +204,4 @@ extension FeedViewController: UITextFieldDelegate {
         return true
     }
 }
+

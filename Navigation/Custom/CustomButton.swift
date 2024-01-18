@@ -1,14 +1,15 @@
 import UIKit
 
 class CustomButton: UIButton {
+    typealias Action = (() -> Void)
     
-    var someAction: (() -> Void)?
+    var someAction: Action
     
-    init(title: String, titleColor: UIColor, tabAction: (() -> Void)?) {
+    init(title: String, titleColor: UIColor, tabAction: @escaping Action) {
+        someAction = tabAction
         super.init(frame: .zero)
         setTitle(title, for: .normal)
         setTitleColor(titleColor, for: .normal)
-        self.someAction = tabAction
         translatesAutoresizingMaskIntoConstraints = false
         layer.cornerRadius = 12.0
         backgroundColor = UIColor(red: 81/255, green: 129/255, blue: 184/255, alpha: 1)
@@ -21,7 +22,7 @@ class CustomButton: UIButton {
     }
     
     @objc private func buttonAction() {
-        someAction?()
+        someAction()
     }
 }
 
