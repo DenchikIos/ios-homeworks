@@ -9,7 +9,7 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     }()
     
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: .zero)
         setupUI()
         setupConstraints()
     }
