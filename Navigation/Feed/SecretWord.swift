@@ -7,10 +7,7 @@ struct SecretWord {
 final class SecretWords {
     
     private let secretWords = [
-        SecretWord(secretWord: "Dune"),
-        SecretWord(secretWord: "Bad"),
-        SecretWord(secretWord: "WarHammer"),
-        SecretWord(secretWord: "Bolter")
+        SecretWord(secretWord: "Developer")
         ]
     
     func todayIsSecretWord() -> String {
