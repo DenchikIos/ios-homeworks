@@ -7,18 +7,16 @@ class InfoViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Look", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
-        
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Info"
-        view.backgroundColor = .systemMint
+        view.backgroundColor = UIColor(red: 231/255, green: 231/255, blue: 223/255, alpha: 1)
         view.addSubview(actionButton)
         setupContraints()
         actionButton.addTarget(self, action: #selector(alertViewController(_:)), for: .touchUpInside)
-        
     }
     
     private func setupContraints(){
