@@ -1,14 +1,12 @@
-import UIKit
+import Foundation
 
-class User {
-    var userLogin: String
+final public class User {
+    
     var userFullName: String
-    var userAvatar: UIImage
+    var userAvatar: String
     var userStatus: String
     
-    
-    init (userLogin: String, userFullName: String, userAvatar: UIImage, userStatus: String) {
-        self.userLogin = userLogin
+    init(userFullName: String, userAvatar: String, userStatus: String) {
         self.userFullName = userFullName
         self.userAvatar = userAvatar
         self.userStatus = userStatus
@@ -16,6 +14,6 @@ class User {
 }
 
 protocol UserService {
-    func authorization(userLogin: String) -> User?
+    func authorization() -> User?
+    
 }
-

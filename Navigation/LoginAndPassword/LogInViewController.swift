@@ -3,32 +3,34 @@ import UIKit
 enum LoginError: Error {
     case userNotFound
     case wrongPassword
+    case userNotFoundAndWrongPassword
 }
 
 final class LogInViewController: UIViewController {
     
     var loginDelegate: LoginViewControllerDelegate?
+    let coordinator: ProfileCoordinator
 
-    private var vkLogo: UIImageView = {
+    private lazy var vkLogo: UIImageView = {
         let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "logo")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    private var loginScrollView: UIScrollView = {
+    private lazy var loginScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
     
-    private var contentView: UIView = {
+    private lazy var contentView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    var loginStackView: UIStackView = {
+    private lazy var loginStackView: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
@@ -41,14 +43,29 @@ final class LogInViewController: UIViewController {
         return stack
     }()
     
-    private lazy var loginButton = CustomButton(title: "Continue", titleColor: .white) { [unowned self] in touchLoginButton()
+    private lazy var loginButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        if let pixel = UIImage(named: "blue_pixel") {
+            button.setBackgroundImage(pixel.image(alpha: 1), for: .normal)
+            button.setBackgroundImage(pixel.image(alpha: 0.8), for: .selected)
+            button.setBackgroundImage(pixel.image(alpha: 0.6), for: .highlighted)
+            button.setBackgroundImage(pixel.image(alpha: 0.4), for: .disabled)
         }
+
+        button.setTitle("Login", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(nil, action: #selector(touchLoginButton), for: .touchUpInside)
+        button.layer.cornerRadius = 12
+        button.clipsToBounds = true
+        return button
+    }()
     
-    var loginField: UITextField = {
+    private lazy var loginField: UITextField = {
         let login = UITextField()
         login.translatesAutoresizingMaskIntoConstraints = false
-        login.placeholder = "Login"
-        login.text = "iosDeveloper"
+        login.placeholder = "Логин"
         login.layer.borderColor = UIColor.lightGray.cgColor
         login.layer.borderWidth = 0.25
         login.leftViewMode = .always
@@ -58,15 +75,15 @@ final class LogInViewController: UIViewController {
         login.font = UIFont.systemFont(ofSize: 16)
         login.autocapitalizationType = .none
         login.returnKeyType = .done
+        login.isSecureTextEntry = true
         return login
     }()
     
-    var passwordField: UITextField = {
+    private lazy var passwordField: UITextField = {
         let password = UITextField()
         password.translatesAutoresizingMaskIntoConstraints = false
         password.leftViewMode = .always
-        password.placeholder = "Password"
-        password.text = "09061992"
+        password.placeholder = "Пароль"
         password.layer.borderColor = UIColor.lightGray.cgColor
         password.layer.borderWidth = 0.25
         password.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: password.frame.height))
@@ -75,20 +92,26 @@ final class LogInViewController: UIViewController {
         password.font = UIFont.systemFont(ofSize: 16)
         password.autocapitalizationType = .none
         password.returnKeyType = .done
+        password.isSecureTextEntry = true
         return password
     }()
     
+    init(coordinator: ProfileCoordinator) {
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 231/255, green: 231/255, blue: 223/255, alpha: 1)
+        view.backgroundColor = .systemBackground
         navigationController?.navigationBar.isHidden = true
-        view.addSubview(loginScrollView)
-        loginScrollView.addSubview(contentView)
-        contentView.addSubviews(vkLogo, loginStackView, loginButton)
-        loginStackView.addArrangedSubview(loginField)
-        loginStackView.addArrangedSubview(passwordField)
         loginField.delegate = self
         passwordField.delegate = self
+        setupUI()
         setupConstraints()
     }
     
@@ -97,6 +120,7 @@ final class LogInViewController: UIViewController {
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -104,12 +128,20 @@ final class LogInViewController: UIViewController {
         let nc = NotificationCenter.default
         nc.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-
+    }
+    
+    private func setupUI(){
+        view.addSubview(loginScrollView)
+        loginScrollView.addSubview(contentView)
+        contentView.addSubviews(vkLogo, loginStackView, loginButton)
+        loginStackView.addArrangedSubview(loginField)
+        loginStackView.addArrangedSubview(passwordField)
+        convenientNotification()
     }
     
     private func setupConstraints() {
-        
         NSLayoutConstraint.activate([
+
             loginScrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             loginScrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             loginScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -138,40 +170,59 @@ final class LogInViewController: UIViewController {
             loginButton.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
-
+    
     private func loginErrorNotification(caseOf error: LoginError) {
-            var errorMassage: String
-            switch error {
-                case .userNotFound:
-                    errorMassage = "Login entered incorrectly"
-                case .wrongPassword:
-                    errorMassage = "Incorrect password entered"
-            }
-            let alertController = UIAlertController(title: "Warning", message: errorMassage, preferredStyle: .alert)
-            let actionAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
-            alertController.addAction(actionAlert)
-            self.present(alertController, animated: true)
+        var errorMassage: String
+        switch error {
+            case .userNotFound:
+                errorMassage = "Неправильно введен логин"
+            case .wrongPassword:
+                errorMassage = "Неправильно введен пароль"
+            case .userNotFoundAndWrongPassword:
+                errorMassage = "Неправильно введен логин и пароль"
         }
+        let alertController = UIAlertController(title: "Предупреждение", message: errorMassage, preferredStyle: .alert)
+        let actionAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
+        alertController.addAction(actionAlert)
+        self.present(alertController, animated: true)
+    }
 
     @objc private func touchLoginButton() {
         let typedLogin = loginField.text ?? ""
         let typedPassword = passwordField.text ?? ""
         
-#if DEBUG
-        let userService = TestUserService()
-#else
-        let userService = CurrentUserService()
-#endif
+        #if DEBUG
+            let userService = TestUserService()
+        #else
+            let userService = CurrentUserService()
+        #endif
         
-        if userService.authorization(userLogin: typedLogin) == nil {
+        if loginDelegate?.checkLoginOnly(inputLogin: typedLogin) == false && loginDelegate?.checkPasswordOnly(inputPassword: typedPassword) == true {
             loginErrorNotification(caseOf: .userNotFound)
-        } else { if loginDelegate?.check(log: typedLogin, pass: typedPassword) == false {
-            loginErrorNotification(caseOf: .wrongPassword)
         } else {
-            let profileViewController = ProfileViewController(userService: userService.authorization(userLogin: typedLogin))
-            navigationController?.pushViewController(profileViewController, animated: true)
+            if loginDelegate?.checkLoginOnly(inputLogin: typedLogin) == true && loginDelegate?.checkPasswordOnly(inputPassword: typedPassword) == false {
+                loginErrorNotification(caseOf: .wrongPassword)
+            } else {
+                if loginDelegate?.check(inputLogin: typedLogin, inputPassword: typedPassword) == false {
+                    loginErrorNotification(caseOf: .userNotFoundAndWrongPassword)
+                } else {
+                    coordinator.presentProfile(navigationController: self.navigationController, user: userService.authorization() ?? User(userFullName: "", userAvatar: "", userStatus: "") )
+                }
+            }
         }
-        }
+        
+    }
+    
+    func convenientNotification (){
+        let alertController = UIAlertController(title: "Предупреждение", message: "Для удобства можно установить автоматически правильные Логин и Пароль", preferredStyle: .alert)
+        let actionAlertYes = UIAlertAction(title: "ОК", style: .default, handler: { action in
+            self.loginField.text = Checker.shared.returnCorrectLogin()
+            self.passwordField.text = Checker.shared.returnCorrectPassword()
+        })
+        let actionAlertNo = UIAlertAction(title: "Нет", style: .default, handler: nil)
+        alertController.addAction(actionAlertYes)
+        alertController.addAction(actionAlertNo)
+        self.present(alertController, animated: true)
     }
 
     @objc private func keyboardShow(notification: NSNotification) {
@@ -184,12 +235,14 @@ final class LogInViewController: UIViewController {
     @objc private func keyboardHide(notification: NSNotification) {
         loginScrollView.contentOffset = CGPoint(x: 0, y: 0)
     }
+    
 }
 
 extension LogInViewController: UITextFieldDelegate {
+    
+    // tap 'done' on the keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
 }
-

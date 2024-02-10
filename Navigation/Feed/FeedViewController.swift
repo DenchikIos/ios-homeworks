@@ -6,7 +6,14 @@ final class FeedViewController: UIViewController {
     //MARK: - Puplic Properties
 
     var post = PostFeed(title: "Мой пост")
-    var viewModel = FeedViewModel()
+    let feedModel: FeedViewModelProtocol
+    let coordinator: FeedCoordinator
+    
+    private lazy var buttonAction: (() -> Void) = {
+            self.coordinator.presentPost(navigationController:
+            self.navigationController, title:
+            self.post.title)
+        }
 
     //MARK: - Private Properties
     
@@ -31,11 +38,11 @@ final class FeedViewController: UIViewController {
         stackView.spacing = 10
         
         var firstButton = CustomButton(title: "First post", titleColor: .black) { [unowned self] in
-            onTapShowNextView()
+            buttonAction()
         }
         stackView.addArrangedSubview(firstButton)
         var secondButton = CustomButton(title: "Second post", titleColor: .black) { [unowned self] in
-            onTapShowNextView()
+            buttonAction()
         }
         stackView.addArrangedSubview(secondButton)
         return stackView
@@ -78,6 +85,18 @@ final class FeedViewController: UIViewController {
         return resultLabel
     }()
     
+    //MARK: - Init
+    
+    init(coordinator: FeedCoordinator) {
+            self.feedModel = FeedViewModel()
+            self.coordinator = coordinator
+            super.init(nibName: nil, bundle: nil)
+    }
+        
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,32 +138,28 @@ final class FeedViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "Word is not correct"), object: nil)
     }
     
+    //MARK: - Private Methods
+    
+    private func actionSetStatusButtonPressed() {
+            checkSecretWordTextField.endEditing(true)
+            
+            if checkSecretWordTextField.text != nil && checkSecretWordTextField.text?.count != 0 {
+                feedModel.check(inputSecretWord: checkSecretWordTextField.text ?? "")
+            }
+    }
+        
     @objc func trueSelector() {
-        resultLabelOfSecretWord.text = "Угадал секретное слово"
-        resultLabelOfSecretWord.backgroundColor = .green
-        resultLabelOfSecretWord.layer.borderColor = UIColor.green.cgColor
-        resultLabelOfSecretWord.alpha = 1
+            resultLabelOfSecretWord.text = "Угадал секретное слово"
+            resultLabelOfSecretWord.textColor = .green
+            resultLabelOfSecretWord.layer.borderColor = UIColor.green.cgColor
+            resultLabelOfSecretWord.alpha = 1
     }
 
     @objc func falseSelector() {
-        resultLabelOfSecretWord.text = "Не угадал секретное слово"
-        resultLabelOfSecretWord.backgroundColor = .red
-        resultLabelOfSecretWord.layer.borderColor = UIColor.red.cgColor
-        resultLabelOfSecretWord.alpha = 1
-    }
-    
-    //MARK: - Private Methods
-    
-    private func onTapShowNextView () {
-            let postViewController = PostViewController(post: post)
-                navigationController?.pushViewController(postViewController, animated: true)
-            }
-    
-    private func actionSetStatusButtonPressed() {
-        checkSecretWordTextField.endEditing(true)
-        if checkSecretWordTextField.text != nil && checkSecretWordTextField.text?.count != 0 {
-            viewModel.check(inputSecretWord: checkSecretWordTextField.text ?? "")
-        }
+            resultLabelOfSecretWord.text = "Не угадал секретное слово"
+            resultLabelOfSecretWord.textColor = .red
+            resultLabelOfSecretWord.layer.borderColor = UIColor.red.cgColor
+            resultLabelOfSecretWord.alpha = 1
     }
     
     @objc private func keyboardShow(notification: NSNotification) {

@@ -8,6 +8,7 @@ class ProfileViewController: UIViewController {
     static let photoIdent = "photo"
     
     private var currentUser: User?
+    let coordinator: ProfileCoordinator
     
     static var postTableView: UITableView = {
         let tableView = UITableView.init(frame: .zero,style: .grouped)
@@ -18,14 +19,15 @@ class ProfileViewController: UIViewController {
         return tableView
     }()
     
-    init(userService: User?) {
-            self.currentUser = userService
-            super.init(nibName: nil, bundle: nil)
-        }
+    init(userService: User?, coordinator: ProfileCoordinator) {
+        self.currentUser = userService
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
         
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     override func viewDidLoad() {
@@ -92,7 +94,7 @@ extension ProfileViewController: UITableViewDelegate {
             guard section == 0 else { return nil }
             let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: Self.headerIdent) as! ProfileHeaderView
             let user = currentUser
-            headerView.avatarImageView.image = user?.userAvatar
+            headerView.avatarImageView.image = UIImage(named: user?.userAvatar ?? "logo")
             headerView.fullNameLabel.text = user?.userFullName
             headerView.statusLabel.text = user?.userStatus
             return headerView

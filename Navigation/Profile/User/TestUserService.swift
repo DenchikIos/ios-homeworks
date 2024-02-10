@@ -1,11 +1,10 @@
-import UIKit
+import Foundation
 
-class TestUserService: UserService {
+final class TestUserService: UserService {
     
-    let testUser = User(userLogin: "test", userFullName: "test", userAvatar: UIImage(systemName: "person.circle") ?? UIImage(), userStatus: "test")
+    let testUser = User(userFullName: "test", userAvatar: "person.circle", userStatus: "test")
     
-    func authorization(userLogin: String) -> User? {
-        let test = userLogin == testUser.userLogin ? testUser : nil
-        return test
-    }
+    func authorization() -> User? {
+            return testUser
+        }
 }
