@@ -42,6 +42,8 @@
 		CEB7A5A52B13987700031ED1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7A5A42B13987700031ED1 /* User.swift */; };
 		CECD35AC2AAA2CD900AB00B6 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECD35AB2AAA2CD900AB00B6 /* FeedViewController.swift */; };
 		CECD35AE2AAA2D1F00AB00B6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECD35AD2AAA2D1F00AB00B6 /* ProfileViewController.swift */; };
+		CEEE9C3B2B9DF6630081DE54 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE9C3A2B9DF6630081DE54 /* NetworkService.swift */; };
+		CEEE9C3D2B9DF9600081DE54 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE9C3C2B9DF9600081DE54 /* Error.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +106,8 @@
 		CEB7A5A42B13987700031ED1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CECD35AB2AAA2CD900AB00B6 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		CECD35AD2AAA2D1F00AB00B6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		CEEE9C3A2B9DF6630081DE54 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		CEEE9C3C2B9DF9600081DE54 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,6 +252,7 @@
 				CEB4D0392AAA028100E10B95 /* Assets.xcassets */,
 				CEB4D03B2AAA028100E10B95 /* LaunchScreen.storyboard */,
 				CEB4D03E2AAA028100E10B95 /* Info.plist */,
+				CEEE9C392B9DF6320081DE54 /* NetworkService */,
 				CE108BD42AB339E8003BF3C0 /* Profile */,
 			);
 			path = Navigation;
@@ -261,6 +266,15 @@
 				CE905E442B15341B000D4894 /* TestUserService.swift */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		CEEE9C392B9DF6320081DE54 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				CEEE9C3C2B9DF9600081DE54 /* Error.swift */,
+				CEEE9C3A2B9DF6630081DE54 /* NetworkService.swift */,
+			);
+			path = NetworkService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -416,7 +430,9 @@
 				CEB4AA272AAB728E00FEBA24 /* InfoViewController.swift in Sources */,
 				CE498A9A2B7797ED00F2D356 /* MainCoordinator.swift in Sources */,
 				CE498AA22B77A03100F2D356 /* LoginInspector.swift in Sources */,
+				CEEE9C3B2B9DF6630081DE54 /* NetworkService.swift in Sources */,
 				CEB4D0332AAA027F00E10B95 /* SceneDelegate.swift in Sources */,
+				CEEE9C3D2B9DF9600081DE54 /* Error.swift in Sources */,
 				CE46BC262B4F26A100BBDDD0 /* FeedViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

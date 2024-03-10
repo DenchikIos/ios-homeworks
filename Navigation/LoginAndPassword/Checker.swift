@@ -31,5 +31,4 @@ final class Checker {
     func returnCorrectPassword() -> String{
         return correctPassword
     }
-    
 }
