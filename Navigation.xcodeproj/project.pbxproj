@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CE108BD62AB33A28003BF3C0 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE108BD52AB33A28003BF3C0 /* ProfileHeaderView.swift */; };
+		CE2F5A6F2BB04F12002CEB52 /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2F5A6E2BB04F12002CEB52 /* InfoTableViewCell.swift */; };
 		CE46BC242B4EB45700BBDDD0 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46BC232B4EB45700BBDDD0 /* CustomButton.swift */; };
 		CE46BC262B4F26A100BBDDD0 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46BC252B4F26A100BBDDD0 /* FeedViewModel.swift */; };
 		CE46BC322B5188CF00BBDDD0 /* SecretWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE46BC312B5188CE00BBDDD0 /* SecretWord.swift */; };
@@ -73,6 +74,7 @@
 
 /* Begin PBXFileReference section */
 		CE108BD52AB33A28003BF3C0 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		CE2F5A6E2BB04F12002CEB52 /* InfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
 		CE46BC232B4EB45700BBDDD0 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		CE46BC252B4F26A100BBDDD0 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		CE46BC312B5188CE00BBDDD0 /* SecretWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretWord.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				CECD35AB2AAA2CD900AB00B6 /* FeedViewController.swift */,
 				CE46BC252B4F26A100BBDDD0 /* FeedViewModel.swift */,
 				CE46BC312B5188CE00BBDDD0 /* SecretWord.swift */,
+				CE2F5A6E2BB04F12002CEB52 /* InfoTableViewCell.swift */,
 				CEB4AA262AAB728E00FEBA24 /* InfoViewController.swift */,
 			);
 			path = Feed;
@@ -408,6 +411,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE498A982B7797B500F2D356 /* FeedCoordinator.swift in Sources */,
+				CE2F5A6F2BB04F12002CEB52 /* InfoTableViewCell.swift in Sources */,
 				CEB4D0312AAA027F00E10B95 /* AppDelegate.swift in Sources */,
 				CED14D5D2BB02405009B2B0A /* NetworkModel.swift in Sources */,
 				CEB1B27B2AD191C8007F4521 /* LogInViewController.swift in Sources */,

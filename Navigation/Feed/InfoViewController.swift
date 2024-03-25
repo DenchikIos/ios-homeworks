@@ -1,52 +1,160 @@
 import UIKit
 
-class InfoViewController: UIViewController {
+final class InfoViewController: UIViewController {
+    
+    private var residents: [Resident] = []
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var orbitalPeriodLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var residentsTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.autoresizesSubviews = true
+        tableView.register(InfoTableViewCell.self, forCellReuseIdentifier: "resident")
+        return tableView
+    }()
 
     private lazy var actionButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Look", for: .normal)
+        button.setTitle("Посмотреть", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
+//        button.isHidden = true
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Info"
-        view.backgroundColor = UIColor(red: 231/255, green: 231/255, blue: 223/255, alpha: 1)
-        view.addSubview(actionButton)
+        title = "Инфо"
+        view.backgroundColor = .systemMint
+        view.addSubviews(actionButton, titleLabel, orbitalPeriodLabel, residentsTableView)
         setupContraints()
         actionButton.addTarget(self, action: #selector(alertViewController(_:)), for: .touchUpInside)
+        setTitle()
+        getInfo()
     }
     
     private func setupContraints(){
         let safeAreaLayoutGuide = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            actionButton.leadingAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.leadingAnchor,
-                constant: 20.0
-            ),
-            actionButton.trailingAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.trailingAnchor,
-                constant: -20.0
-            ),
-            actionButton.centerYAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.centerYAnchor
-                ),
+            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 40),
+            titleLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            titleLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            
+            orbitalPeriodLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
+            orbitalPeriodLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+            orbitalPeriodLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            
+            residentsTableView.topAnchor.constraint(equalTo: orbitalPeriodLabel.bottomAnchor, constant: 16),
+            residentsTableView.leadingAnchor.constraint(equalTo: orbitalPeriodLabel.leadingAnchor),
+            residentsTableView.trailingAnchor.constraint(equalTo: orbitalPeriodLabel.trailingAnchor),
+            residentsTableView.heightAnchor.constraint(equalToConstant: 350),
+//            residentsTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            
+            actionButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor,constant: 20.0),
+            actionButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,constant: -20.0),
+            actionButton.topAnchor.constraint(equalTo: residentsTableView.bottomAnchor, constant: 16),
             actionButton.heightAnchor.constraint(equalToConstant: 44.0)
         ])
     }
     
-    @objc func alertViewController(_ sender: UIAlertController) {
-        let alertController = UIAlertController(title: "Information", message: "Information first", preferredStyle: .alert)
+    private func setTitle() {
+        let url = SomeTitleFromNetwork().url
+        NetworkService.request(url: url) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let title):
+                    self?.titleLabel.text = title
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func getInfo(){
+        getInfoAboutPlanet { [ weak self] result in
+            switch result {
+            case .success(let planet):
+                DispatchQueue.main.async {
+                    self?.orbitalPeriodLabel.text = "период обращения планеты Татуин вокруг своей звезды: \(planet.orbitalPeriod)"
+                }
+                planet.residents.forEach { resident in
+                    self?.getInfoAboutResident(resident: resident) { resultResident in
+                        switch resultResident {
+                        case .success(let resident):
+                            self?.residents.append(resident)
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        }
+                        DispatchQueue.main.async {
+                            self?.residentsTableView.reloadData()
+                        }
 
-        let actionFirst = UIAlertAction(title: "Left", style: .default, handler: nil)
-        let actionSecond = UIAlertAction(title: "Right", style: .default, handler: nil)
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+    }
+    
+    private func getInfoAboutPlanet(completion: @escaping (Result<Planets,NetworkError>) -> Void){
+        guard let url = PlanetFromNetwork.planet.url else {return}
+        NetworkService.fetchData(request: URLRequest(url: url), completion: completion)
+    }
+
+    private func getInfoAboutResident(resident: String, completion: @escaping (Result<Resident,NetworkError>) -> Void){
+        guard let url = URL(string: resident) else {return}
+        NetworkService.fetchData(request: URLRequest(url: url), completion: completion)
+    }
+    
+    @objc func alertViewController(_ sender: UIAlertController) {
+        let alertController = UIAlertController(title: "Информация первая", message: "Информация вторая, сообщение", preferredStyle: .alert)
+        
+        let actionFirstName = "Левый"
+        let actionSecondName = "Правый"
+
+        let actionFirst = UIAlertAction(title: actionFirstName, style: .default, handler: { action in
+            print("Нажал на кнопку \(actionFirstName)")
+        })
+        let actionSecond = UIAlertAction(title: actionSecondName, style: .default, handler: { action in
+            print("Нажал на кнопку \(actionSecondName)")
+        })
         
         alertController.addAction(actionFirst)
-        print("Pressed the button \(actionFirst)")
         alertController.addAction(actionSecond)
-        print("Pressed the button \(actionSecond)")
         self.present(alertController, animated: true)
         }
+}
+
+extension InfoViewController: UITableViewDelegate {}
+
+extension InfoViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        residents.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "resident", for: indexPath) as! InfoTableViewCell
+        cell.update(model: residents[indexPath.row])
+        return cell
+    }
 }

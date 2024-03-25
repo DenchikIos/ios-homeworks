@@ -1,11 +1,12 @@
 import Foundation
 
 
-enum NetworkError: Error {
-    case badRequest
-    case unauthorized
-    case notFound
-    case serverError
-    case unowned
-    case decodeError
+enum NetworkError: Int, Error {
+    case badRequest = 400
+    case unauthorized = 401
+    case notFound = 404
+    case decodeError = 1000
+    case serverError = 500
+    case unowned = 2000
 }
+
